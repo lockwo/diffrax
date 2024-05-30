@@ -37,7 +37,7 @@ from ._progress_meter import (
     NoProgressMeter,
 )
 from ._root_finder import use_stepsize_tol
-from ._saveat import save_y, SaveAt, SubSaveAt
+from ._saveat import SaveAt, SubSaveAt
 from ._solution import is_okay, is_successful, RESULTS, Solution
 from ._solver import (
     AbstractImplicitSolver,
@@ -254,6 +254,7 @@ def loop(
     inner_while_loop,
     outer_while_loop,
     progress_meter,
+    direction,
 ):
     if saveat.dense:
         dense_ts = init_state.dense_ts
@@ -405,7 +406,7 @@ def loop(
                 _ts = _save_state.ts.at[_save_state.save_index].set(_t)
                 _ys = jtu.tree_map(
                     lambda __y, __ys: __ys.at[_save_state.save_index].set(__y),
-                    fn(_t, _y, args),
+                    fn(direction * _t, _y, args),
                     _save_state.ys,
                 )
                 return SaveState(
@@ -881,25 +882,6 @@ def diffeqsolve(
 
     saveat = eqx.tree_at(_get_subsaveat_ts, saveat, replace_fn=_check_subsaveat_ts)
 
-    def _get_subsaveat_fns(saveat):
-        out = [
-            s.fn
-            for s in jtu.tree_leaves(saveat.subs, is_leaf=_is_subsaveat)
-            if s.ts is not None
-        ]
-        return [x for x in out if x is not None]
-
-    def _direction_replace(fn):
-        if fn is save_y:
-            return fn
-        return lambda t, y, args: fn(direction * t, y, args)
-
-    saveat = eqx.tree_at(
-        _get_subsaveat_fns,
-        saveat,
-        replace_fn=_direction_replace,  # noqa: F821
-    )
-
     # Initialise states
     tprev = t0
     error_order = solver.error_order(terms)
@@ -1025,6 +1007,7 @@ def diffeqsolve(
         passed_solver_state=passed_solver_state,
         passed_controller_state=passed_controller_state,
         progress_meter=progress_meter,
+        direction=direction,
     )
 
     #
