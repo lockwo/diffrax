@@ -1,4 +1,4 @@
-import diffrax
+import diffrax_extensions as diffrax
 import jax
 import jax.numpy as jnp
 import jax.random as jr

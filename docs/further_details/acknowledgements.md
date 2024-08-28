@@ -1,7 +1,8 @@
 # Acknowledgements
 
-Diffrax is inspired by previous differential equation libraries written for other frameworks. In particular:
+Diffrax Extensions is inspired by previous differential equation libraries written for other frameworks. In particular:
 
+- [diffrax](https://github.com/patrick-kidger/diffrax)
 - [torchdiffeq](https://github.com/rtqichen/torchdiffeq)
 - [torchsde](https://github.com/google-research/torchsde)
 - [torchcde](https://github.com/patrick-kidger/torchcde)

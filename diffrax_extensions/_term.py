@@ -43,7 +43,7 @@ class AbstractTerm(eqx.Module, Generic[_VF, _Control]):
 
         - `t`: the integration time.
         - `y`: the evolving state; a PyTree of structure $T$.
-        - `args`: any static arguments as passed to [`diffrax.diffeqsolve`][].
+        - `args`: any static arguments as passed to [`diffrax_extensions.diffeqsolve`][].
 
         **Returns:**
 
@@ -101,8 +101,8 @@ class AbstractTerm(eqx.Module, Generic[_VF, _Control]):
         pass
 
     def vf_prod(self, t: RealScalarLike, y: Y, args: Args, control: _Control) -> Y:
-        r"""The composition of [`diffrax.AbstractTerm.vf`][] and
-        [`diffrax.AbstractTerm.prod`][].
+        r"""The composition of [`diffrax_extensions.AbstractTerm.vf`][] and
+        [`diffrax_extensions.AbstractTerm.prod`][].
 
         With a solution $y$ to a differential equation with vector field $f$ and
         control $x$, this computes $f(t, y(t), args) \Delta x(t)$ given $t$, $y(t)$,
@@ -127,13 +127,13 @@ class AbstractTerm(eqx.Module, Generic[_VF, _Control]):
         !!! example
 
             This is used extensively for efficiency when backpropagating via
-            [`diffrax.BacksolveAdjoint`][].
+            [`diffrax_extensions.BacksolveAdjoint`][].
 
         **Arguments:**
 
         - `t`: the integration time.
         - `y`: the evolving state; a PyTree of structure $T$.
-        - `args`: any static arguments as passed to [`diffrax.diffeqsolve`][].
+        - `args`: any static arguments as passed to [`diffrax_extensions.diffeqsolve`][].
         - `control`: The control evaluated over an interval; a PyTree of structure $U$.
 
         **Returns:**
@@ -221,7 +221,7 @@ ODETerm.__init__.__doc__ = """**Arguments:**
 - `vector_field`: A callable representing the vector field. This callable takes three
     arguments `(t, y, args)`. `t` is a scalar representing the integration time. `y` is
     the evolving state of the system. `args` are any static arguments as passed to
-    [`diffrax.diffeqsolve`][].
+    [`diffrax_extensions.diffeqsolve`][].
 """
 
 
@@ -281,7 +281,7 @@ class _AbstractControlTerm(AbstractTerm[_VF, _Control]):
         $f(t, y(t), args) \frac{\mathrm{d}x}{\mathrm{d}t}\mathrm{d}t$.
 
         This method converts this `ControlTerm` into the corresponding
-        [`diffrax.ODETerm`][] in this way.
+        [`diffrax_extensions.ODETerm`][] in this way.
         """
         vector_field = _ControlToODE(self)
         return ODETerm(vector_field=vector_field)
@@ -292,7 +292,7 @@ _AbstractControlTerm.__init__.__doc__ = """**Arguments:**
 - `vector_field`: A callable representing the vector field. This callable takes three
     arguments `(t, y, args)`. `t` is a scalar representing the integration time. `y` is
     the evolving state of the system. `args` are any static arguments as passed to
-    [`diffrax.diffeqsolve`][]. This `vector_field` can either be
+    [`diffrax_extensions.diffeqsolve`][]. This `vector_field` can either be
 
     1. a function that returns a PyTree of JAX arrays, or
     2. it can return a
@@ -301,7 +301,7 @@ _AbstractControlTerm.__init__.__doc__ = """**Arguments:**
 
 - `control`: The control. Should either be
 
-    1. a [`diffrax.AbstractPath`][], in which case its `.evaluate(t0, t1)` method
+    1. a [`diffrax_extensions.AbstractPath`][], in which case its `.evaluate(t0, t1)` method
         will be used to give the increment of the control over a time interval
         `[t0, t1]`, or
     2. a callable `(t0, t1) -> increment`, which returns the increment directly.
@@ -456,7 +456,7 @@ class WeaklyDiagonalControlTerm(_AbstractControlTerm[_VF, _Control]):
     def vector_field(t, y, args):
         return lineax.DiagonalLinearOperator(...)
 
-    diffrax.ControlTerm(vector_field, ...)
+    diffrax_extensions.ControlTerm(vector_field, ...)
     ```
 
     ---
@@ -495,7 +495,7 @@ class WeaklyDiagonalControlTerm(_AbstractControlTerm[_VF, _Control]):
             "    ...\n"
             "    return some_vector\n"
             "\n"
-            "diffrax.WeaklyDiagonalControlTerm(vector_field)\n"
+            "diffrax_extensions.WeaklyDiagonalControlTerm(vector_field)\n"
             "```\n"
             "is now:\n"
             "```\n"
@@ -505,7 +505,7 @@ class WeaklyDiagonalControlTerm(_AbstractControlTerm[_VF, _Control]):
             "    ...\n"
             "    return lineax.DiagonalLinearOperator(some_vector)\n"
             "\n"
-            "diffrax.ControlTerm(vector_field)\n"
+            "diffrax_extensions.ControlTerm(vector_field)\n"
             "```\n"
             "Lineax is available at `https://github.com/patrick-kidger/lineax`.\n",
             stacklevel=3,
@@ -555,7 +555,7 @@ class MultiTerm(AbstractTerm, Generic[_Terms]):
     def __init__(self, *terms: AbstractTerm):
         """**Arguments:**
 
-        - `*terms`: Any number of [`diffrax.AbstractTerm`][]s to combine.
+        - `*terms`: Any number of [`diffrax_extensions.AbstractTerm`][]s to combine.
         """
         self.terms = terms  # pyright: ignore
 
@@ -776,3 +776,33 @@ class AdjointTerm(AbstractTerm[_VF, _Control]):
         dy, vjp = jax.vjp(_to_vjp, y, diff_args, diff_term)
         da_y, da_diff_args, da_diff_term = vjp((-(a_y**ω)).ω)
         return dy, da_y, da_diff_args, da_diff_term
+
+
+def stratonovich_to_ito(drift: ODETerm, diffusion: _AbstractControlTerm) -> ODETerm:
+    """Apply a correction to the drift of an SDE to convert it from Stratonovich form
+    to Ito form.
+
+    For more information see: https://oatml.cs.ox.ac.uk/blog/2022/03/22/ito-strat.html.
+
+    Or (9.16) on page 159 of:
+
+    ??? cite "Reference"
+
+        ```bibtex
+        @book{kloeden1992stochastic,
+            title={Stochastic differential equations},
+            author={Kloeden, Peter E and Platen, Eckhard and Kloeden, Peter E and
+                Platen, Eckhard},
+            year={1992},
+            publisher={Springer}
+        }
+        ```
+    """
+
+    def corrected_drift(t, y, args):
+        # vec(g) * d(vec(g))/dy
+        _drift = drift.vf(t, y, args)
+        diff, vjp_fn = eqx.filter_vjp(lambda x: diffusion.vf(t, x, args), y)
+        return jtu.tree_map(lambda a, b: a - 0.5 * b, _drift, vjp_fn(diff)[0])
+
+    return ODETerm(corrected_drift)

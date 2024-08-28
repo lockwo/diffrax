@@ -850,7 +850,7 @@ def diffeqsolve(
         can be coerced to JAX arrays, like Python floats.)
     - `args`: Any additional arguments to pass to the vector field.
     - `saveat`: What times to save the solution of the differential equation. See
-        [`diffrax.SaveAt`][]. Defaults to just the last time `t1`. (Keyword-only
+        [`diffrax_extensions.SaveAt`][]. Defaults to just the last time `t1`. (Keyword-only
         argument.)
     - `stepsize_controller`: How to change the step size as the integration progresses.
         See the [list of stepsize controllers](../api/stepsize_controller.md).
@@ -908,7 +908,7 @@ def diffeqsolve(
 
     **Returns:**
 
-    Returns a [`diffrax.Solution`][] object specifying the solution to the differential
+    Returns a [`diffrax_extensions.Solution`][] object specifying the solution to the differential
     equation.
 
     **Raises:**
@@ -930,9 +930,9 @@ def diffeqsolve(
     # Backward compatibility
     if discrete_terminating_event is not None:
         warnings.warn(
-            "`diffrax.diffeqsolve(..., discrete_terminating_event=...)` is deprecated "
-            "in favour of the more general `diffrax.diffeqsolve(..., event=...)` "
-            "interface. This will be removed in some future version of Diffrax.",
+            "`diffrax_extensions.diffeqsolve(..., discrete_terminating_event=...)` is deprecated "
+            "in favour of the more general `diffrax_extensions.diffeqsolve(..., event=...)` "
+            "interface. This will be removed in some future version of diffrax_extensions.",
             stacklevel=2,
         )
         if event is None:
@@ -942,7 +942,7 @@ def diffeqsolve(
         else:
             raise ValueError(
                 "Cannot pass both "
-                "`diffrax.diffeqsolve(..., event=..., discrete_terminating_event=...)`."
+                "`diffrax_extensions.diffeqsolve(..., event=..., discrete_terminating_event=...)`."
             )
 
     # Error checking
@@ -1106,17 +1106,17 @@ def diffeqsolve(
                 raise ValueError(
                     "A fixed step size controller is being used alongside an implicit "
                     "solver, but the tolerances for the implicit solver have not been "
-                    "specified. (Being unspecified is the default in Diffrax.)\n"
+                    "specified. (Being unspecified is the default in diffrax_extensions.)\n"
                     "The correct fix is almost always to use an adaptive step size "
                     "controller. For example "
-                    "`diffrax.diffeqsolve(..., "
-                    "stepsize_controller=diffrax.PIDController(rtol=..., atol=...))`. "
+                    "`diffrax_extensions.diffeqsolve(..., "
+                    "stepsize_controller=diffrax_extensions.PIDController(rtol=..., atol=...))`. "
                     "In this case the same tolerances are used for the implicit "
                     "solver as are used to control the adaptive stepping.\n"
                     "(Note for advanced users: the tolerances for the implicit "
                     "solver can also be explicitly set instead. For example "
-                    "`diffrax.diffeqsolve(..., solver=diffrax.Kvaerno5(root_finder="
-                    "diffrax.VeryChord(rtol=..., atol=..., "
+                    "`diffrax_extensions.diffeqsolve(..., solver=diffrax_extensions.Kvaerno5(root_finder="
+                    "diffrax_extensions.VeryChord(rtol=..., atol=..., "
                     "norm=optimistix.max_norm)))`. In this case the norm must also be "
                     "explicitly specified.)\n"
                     "Adaptive step size controllers are the preferred solution, as "

@@ -1,16 +1,16 @@
 # Abstract solvers
 
-All of the solvers (both ODE and SDE solvers) implement the following interface specified by [`diffrax.AbstractSolver`][].
+All of the solvers (both ODE and SDE solvers) implement the following interface specified by [`diffrax_extensions.AbstractSolver`][].
 
 The exact details of this interface are only really useful if you're using the [Manual stepping](../../usage/manual-stepping.md) interface or defining your own solvers; otherwise this is all just internal to the library.
 
 Also see [Extending Diffrax](../../usage/extending.md) for more information on defining your own solvers.
 
-In addition [`diffrax.AbstractSolver`][] has several subclasses that you can use to mark your custom solver as exhibiting particular behaviour.
+In addition [`diffrax_extensions.AbstractSolver`][] has several subclasses that you can use to mark your custom solver as exhibiting particular behaviour.
 
 ---
 
-::: diffrax.AbstractSolver
+::: diffrax_extensions.AbstractSolver
     selection:
         members:
             - order
@@ -22,32 +22,32 @@ In addition [`diffrax.AbstractSolver`][] has several subclasses that you can use
 
 ---
 
-::: diffrax.AbstractImplicitSolver
+::: diffrax_extensions.AbstractImplicitSolver
     selection:
         members:
           - __init__
 
 ---
 
-::: diffrax.AbstractAdaptiveSolver
+::: diffrax_extensions.AbstractAdaptiveSolver
     selection:
         members: false
 
 ---
 
-::: diffrax.AbstractItoSolver
+::: diffrax_extensions.AbstractItoSolver
     selection:
         members: false
 
 ---
 
-::: diffrax.AbstractStratonovichSolver
+::: diffrax_extensions.AbstractStratonovichSolver
     selection:
         members: false
 
 ---
 
-::: diffrax.AbstractWrappedSolver
+::: diffrax_extensions.AbstractWrappedSolver
     selection:
         members:
             - __init__
@@ -56,32 +56,32 @@ In addition [`diffrax.AbstractSolver`][] has several subclasses that you can use
 
 ### Abstract Runge--Kutta solvers
 
-::: diffrax.AbstractRungeKutta
+::: diffrax_extensions.AbstractRungeKutta
     selection:
         members: false
 
-::: diffrax.AbstractERK
+::: diffrax_extensions.AbstractERK
     selection:
         members: false
 
-::: diffrax.AbstractDIRK
+::: diffrax_extensions.AbstractDIRK
     selection:
         members: false
 
-::: diffrax.AbstractSDIRK
+::: diffrax_extensions.AbstractSDIRK
     selection:
         members: false
 
-::: diffrax.AbstractESDIRK
+::: diffrax_extensions.AbstractESDIRK
     selection:
         members: false
 
-::: diffrax.ButcherTableau
+::: diffrax_extensions.ButcherTableau
     selection:
         members:
             - __init__
 
-::: diffrax.CalculateJacobian
+::: diffrax_extensions.CalculateJacobian
     selection:
         members: false
 
@@ -89,11 +89,11 @@ In addition [`diffrax.AbstractSolver`][] has several subclasses that you can use
 
 ### Abstract Stochastic Runge--Kutta (SRK) solvers
 
-::: diffrax.AbstractSRK
+::: diffrax_extensions.AbstractSRK
     selection:
         members: false
 
-::: diffrax.StochasticButcherTableau
+::: diffrax_extensions.StochasticButcherTableau
     selection:
         members:
             - __init__

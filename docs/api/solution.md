@@ -1,6 +1,6 @@
 # Solution
 
-::: diffrax.Solution
+::: diffrax_extensions.Solution
     selection:
         members:
             - t0
@@ -18,6 +18,6 @@
 
 ---
 
-::: diffrax.RESULTS
+::: diffrax_extensions.RESULTS
     selection:
         members: false

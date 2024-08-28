@@ -37,7 +37,7 @@ class ShARK(AbstractSRK, AbstractStratonovichSolver):
 
     This is the recommended choice for SDEs with additive noise.
 
-    See also [`diffrax.SRA1`][], which is very similar.
+    See also [`diffrax_extensions.SRA1`][], which is very similar.
 
     ??? cite "Reference"
 

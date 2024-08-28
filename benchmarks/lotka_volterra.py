@@ -4,7 +4,7 @@ import timeit
 
 import jax
 import jax.numpy as jnp
-from diffrax import diffeqsolve, Dopri8, ODETerm, PIDController, Tsit5
+from diffrax_extensions import diffeqsolve, Dopri8, ODETerm, PIDController, Tsit5
 
 
 jax.config.update("jax_enable_x64", True)

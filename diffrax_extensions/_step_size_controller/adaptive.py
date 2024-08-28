@@ -99,7 +99,7 @@ class AbstractAdaptiveStepSizeController(
     """Indicates an adaptive step size controller.
 
     Accepts tolerances `rtol` and `atol`. When used in conjunction with an implicit
-    solver ([`diffrax.AbstractImplicitSolver`][]), then these tolerances will
+    solver ([`diffrax_extensions.AbstractImplicitSolver`][]), then these tolerances will
     automatically be used as the tolerances for the nonlinear solver passed to the
     implicit solver, if they are not specified manually.
     """
@@ -118,7 +118,7 @@ class AbstractAdaptiveStepSizeController(
                 "If you want to match the previous defaults then specify "
                 "`rtol=1e-3`, `atol=1e-6`. For example:\n"
                 "```\n"
-                "diffrax.PIDController(rtol=1e-3, atol=1e-6)\n"
+                "diffrax_extensions.PIDController(rtol=1e-3, atol=1e-6)\n"
                 "```\n"
             )
 
@@ -208,9 +208,9 @@ class PIDController(
             ```
             to compare the effect of different tolerances:
             ```python
-            PID_controller_incorrect = diffrax.PIDController(rtol=1e-3, atol=1e-6)
-            PID_controller_correct = diffrax.PIDController(rtol=1e-7, atol=1e-9)
-            Constant_controller = diffrax.ConstantStepSize()
+            PID_controller_incorrect = diffrax_extensions.PIDController(rtol=1e-3, atol=1e-6)
+            PID_controller_correct = diffrax_extensions.PIDController(rtol=1e-7, atol=1e-9)
+            Constant_controller = diffrax_extensions.ConstantStepSize()
             ```
             The phase portraits of the pendulum from the different tolerances clearly
             illustrate the impact of the choice of `rtol` and `atol` on the accuracy of

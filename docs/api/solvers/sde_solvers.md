@@ -26,19 +26,19 @@ See also [How to choose a solver](../../usage/how-to-choose-a-solver.md#stochast
 
 These solvers can be used to solve SDEs just as well as they can be used to solve ODEs.
 
-::: diffrax.Euler
+::: diffrax_extensions.Euler
     selection:
         members: false
 
-::: diffrax.Heun
+::: diffrax_extensions.Heun
     selection:
         members: false
 
-::: diffrax.Midpoint
+::: diffrax_extensions.Midpoint
     selection:
         members: false
 
-::: diffrax.Ralston
+::: diffrax_extensions.Ralston
     selection:
         members: false
 
@@ -55,15 +55,15 @@ These solvers can be used to solve SDEs just as well as they can be used to solv
     These solvers are SDE-specific. For these, `terms` must specifically be of the form `MultiTerm(ODETerm(...), SomeOtherTerm(...))` (Typically `SomeOTherTerm` will be a `ControlTerm` representing the drift and diffusion specifically.
 
 
-::: diffrax.EulerHeun
+::: diffrax_extensions.EulerHeun
     selection:
         members: false
 
-::: diffrax.ItoMilstein
+::: diffrax_extensions.ItoMilstein
     selection:
         members: false
 
-::: diffrax.StratonovichMilstein
+::: diffrax_extensions.StratonovichMilstein
     selection:
         members: false
 
@@ -71,27 +71,27 @@ These solvers can be used to solve SDEs just as well as they can be used to solv
 
 These are a particularly important class of SDE-only solvers.
 
-::: diffrax.SEA
+::: diffrax_extensions.SEA
     selection:
         members: false
 
-::: diffrax.SRA1
+::: diffrax_extensions.SRA1
     selection:
         members: false
 
-::: diffrax.ShARK
+::: diffrax_extensions.ShARK
     selection:
         members: false
 
-::: diffrax.GeneralShARK
+::: diffrax_extensions.GeneralShARK
     selection:
         members: false
 
-::: diffrax.SlowRK
+::: diffrax_extensions.SlowRK
     selection:
         members: false
 
-::: diffrax.SPaRK
+::: diffrax_extensions.SPaRK
     selection:
         members: false
 
@@ -101,7 +101,7 @@ These are a particularly important class of SDE-only solvers.
 
 These are reversible in the same way as when applied to ODEs. [See here.](./ode_solvers.md#reversible-methods)
 
-::: diffrax.ReversibleHeun
+::: diffrax_extensions.ReversibleHeun
     selection:
         members: false
 
@@ -109,7 +109,7 @@ These are reversible in the same way as when applied to ODEs. [See here.](./ode_
 
 ### Wrapper solvers
 
-::: diffrax.HalfSolver
+::: diffrax_extensions.HalfSolver
     selection:
         members:
             - __init__

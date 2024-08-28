@@ -35,7 +35,7 @@ class SRA1(AbstractSRK, AbstractStratonovichSolver):
     Makes two evaluations of the drift and diffusion per step and has a strong order
     1.5.
 
-    See also [`diffrax.ShARK`][], which is very similar.
+    See also [`diffrax_extensions.ShARK`][], which is very similar.
 
     ??? cite "Reference"
 

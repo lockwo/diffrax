@@ -1,14 +1,14 @@
 [project]
-name = "diffrax"
+name = "diffrax_extensions"
 version = "0.6.0"
 description = "GPU+autodiff-capable ODE/SDE/CDE solvers written in JAX."
 readme = "README.md"
 requires-python ="~=3.9"
 license = {file = "LICENSE"}
 authors = [
-  {name = "Patrick Kidger", email = "contact@kidger.site"},
+  {name = "Owen Lockwood", email = "contact@kidger.site"},
 ]
-keywords = ["jax", "dynamical-systems", "differential-equations", "deep-learning", "equinox", "neural-differential-equations", "diffrax"]
+keywords = ["jax", "dynamical-systems", "differential-equations", "deep-learning", "equinox", "neural-differential-equations", "diffrax_extensions"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -22,7 +22,7 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Information Analysis",
     "Topic :: Scientific/Engineering :: Mathematics",
 ]
-urls = {repository = "https://github.com/patrick-kidger/diffrax" }
+urls = {repository = "https://github.com/lockwo/diffrax_extensions" }
 dependencies = ["jax>=0.4.28", "jaxtyping>=0.2.24", "typing_extensions>=4.5.0", "typeguard==2.13.3", "equinox>=0.11.2", "lineax>=0.0.5", "optimistix>=0.0.7"]
 
 [build-system]
@@ -30,10 +30,10 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build]
-include = ["diffrax/*"]
+include = ["diffrax_extensions/*"]
 
 [tool.pytest.ini_options]
-addopts = "--jaxtyping-packages=diffrax,beartype.beartype(conf=beartype.BeartypeConf(strategy=beartype.BeartypeStrategy.On))"
+addopts = "--jaxtyping-packages=diffrax_extensions,beartype.beartype(conf=beartype.BeartypeConf(strategy=beartype.BeartypeStrategy.On))"
 markers = ["slow"]
 
 [tool.ruff]
@@ -56,4 +56,4 @@ order-by-type = false
 reportIncompatibleMethodOverride = true
 reportIncompatibleVariableOverride = false  # Incompatible with eqx.AbstractVar
 reportUnnecessaryTypeIgnoreComment = true
-include = ["diffrax", "tests"]
+include = ["diffrax_extensions", "tests"]

@@ -164,9 +164,9 @@ class StochasticButcherTableau(Generic[_Coeffs]):
 
 
 StochasticButcherTableau.__init__.__doc__ = """The coefficients of a
-[`diffrax.AbstractSRK`][] method.
+[`diffrax_extensions.AbstractSRK`][] method.
 
-See also the documentation for [`diffrax.AbstractSRK`][] for additional details on the
+See also the documentation for [`diffrax_extensions.AbstractSRK`][] for additional details on the
 mathematical meaning of each of these arguments.
 
 **Arguments:**
@@ -207,7 +207,7 @@ class AbstractSRK(AbstractSolver[_SolverState]):
     Depending on the solver, the Brownian motion might need to generate
     different types of Lévy areas, specified by the `minimal_levy_area` attribute.
 
-    For example, the [`diffrax.ShARK`][] solver requires space-time Lévy area, so
+    For example, the [`diffrax_extensions.ShARK`][] solver requires space-time Lévy area, so
     it will have `minimal_levy_area = AbstractSpaceTimeLevyArea` and the Brownian
     motion must be initialised with `levy_area=SpaceTimeLevyArea`.
 
@@ -250,7 +250,7 @@ class AbstractSRK(AbstractSolver[_SolverState]):
     When g depends on t, we need to add a correction term to $y_{n+1}$ of
     the form $(g(t_{n+1}) - g(t_n)) \, (\frac{1}{2} W_n - H_n)$.
 
-    The coefficients are provided in the [`diffrax.StochasticButcherTableau`][].
+    The coefficients are provided in the [`diffrax_extensions.StochasticButcherTableau`][].
     In particular the coefficients $b^W$, and $a^W$ are provided in `tableau.cfs_bm`,
     as well as $b^H$, $a^H$, $b^K$, and $a^K$ if needed.
     """

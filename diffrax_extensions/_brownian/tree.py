@@ -181,9 +181,9 @@ class VirtualBrownianTree(AbstractBrownianPath):
     !!! info "Lévy Area"
         The parameter `levy_area` can be set to one of:
 
-        - [`diffrax.BrownianIncrement`][] (default, generates the increment of W)
-        - [`diffrax.SpaceTimeLevyArea`][] (generates W and the space-time Lévy area H)
-        - [`diffrax.SpaceTimeTimeLevyArea`][] (generates W, H and the space-time-time
+        - [`diffrax_extensions.BrownianIncrement`][] (default, generates the increment of W)
+        - [`diffrax_extensions.SpaceTimeLevyArea`][] (generates W and the space-time Lévy area H)
+        - [`diffrax_extensions.SpaceTimeTimeLevyArea`][] (generates W, H and the space-time-time
                                                 Lévy area K)
 
         The choice of `levy_area` will impact the Brownian path, so even with the same

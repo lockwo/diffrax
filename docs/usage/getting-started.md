@@ -10,7 +10,7 @@
     - The "Basic API" on the sidebar is the main reference for everything you need to know to solve ODEs.
     - The "Advanced API" on the sidebar is the extended reference, in particular including everything needed to solve SDEs and CDEs.
 
-The main function in Diffrax is [`diffrax.diffeqsolve`][]. This solves the initial value problem corresponding to an ordinary/stochastic/controlled differential equation.
+The main function in Diffrax is [`diffrax_extensions.diffeqsolve`][]. This solves the initial value problem corresponding to an ordinary/stochastic/controlled differential equation.
 
 ## Ordinary differential equations (ODEs)
 
@@ -21,7 +21,7 @@ $y(0) = 1 \qquad \frac{\mathrm{d}y}{\mathrm{d}t}(t) = -y(t)$
 over the interval $[0, 3]$.
 
 ```python
-from diffrax import diffeqsolve, Dopri5, ODETerm, SaveAt, PIDController
+from diffrax_extensions import diffeqsolve, Dopri5, ODETerm, SaveAt, PIDController
 
 vector_field = lambda t, y, args: -y
 term = ODETerm(vector_field)
@@ -50,7 +50,7 @@ print(sol.ys)  # DeviceArray([1.   , 0.368, 0.135, 0.0498])
     - The numerical solver (here `Dopri5`) can be switched out.
         - See the guide on [How to choose a solver](./how-to-choose-a-solver.md).
         - See the [ODE solvers](../api/solvers/ode_solvers.md) page for the full list of solvers.
-    - Where to save the result (e.g. to obtain dense output) can be adjusted by changing [`diffrax.SaveAt`][].
+    - Where to save the result (e.g. to obtain dense output) can be adjusted by changing [`diffrax_extensions.SaveAt`][].
     - Step sizes and locations can be changed.
         - The initial step size can be selected adaptively by setting `dt0=None`.
         - A constant step size can be used by setting `stepsize_controller = ConstantStepSize()`. (This is also the default choice for `stepsize_controller` if you do not pass one at all.)
@@ -70,7 +70,7 @@ over the interval $[0, 3]$.
 
 ```python
 import jax.random as jr
-from diffrax import diffeqsolve, ControlTerm, Euler, MultiTerm, ODETerm, SaveAt, VirtualBrownianTree
+from diffrax_extensions import diffeqsolve, ControlTerm, Euler, MultiTerm, ODETerm, SaveAt, VirtualBrownianTree
 
 t0, t1 = 1, 3
 drift = lambda t, y, args: -y
@@ -128,7 +128,7 @@ over the interval $[0, 3]$, subject to the control signal $x(t) = t^2$.
     CDEs are useful to work with directly when the control signal isn't known ahead of time. See the [Neural CDE](../examples/neural_cde.ipynb) example, which uses CDEs to perform time series classification, where the control signal $x$ depends on the input time series.
 
 ```python
-from diffrax import AbstractPath, ControlTerm, diffeqsolve, Dopri5
+from diffrax_extensions import AbstractPath, ControlTerm, diffeqsolve, Dopri5
 
 
 class QuadraticPath(AbstractPath):
@@ -157,7 +157,7 @@ print(sol.ts)  # DeviceArray([3.])
 print(sol.ys)  # DeviceArray([0.00012341])
 ```
 
-- We specify a control by inheriting from [`diffrax.AbstractPath`][].
+- We specify a control by inheriting from [`diffrax_extensions.AbstractPath`][].
     - It's very common to create a control by interpolating data: Diffrax provides some [interpolation routines](../api/interpolation.md) for this.
 - No `diffeqsolve(..., saveat=...)` argument is passed, so the default is used: saving at just the final time point `t1`.
 - No step size controller is specified so by default a constant step size is used.

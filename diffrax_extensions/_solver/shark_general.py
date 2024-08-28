@@ -34,22 +34,22 @@ _tab = StochasticButcherTableau(
 class GeneralShARK(AbstractSRK, AbstractStratonovichSolver):
     r"""ShARK method for Stratonovich SDEs.
 
-    As compared to [`diffrax.ShARK`][] this can handle any SDE, not only those with
+    As compared to [`diffrax_extensions.ShARK`][] this can handle any SDE, not only those with
     additive noise.
 
     Makes two evaluations of the drift and three evaluations of the diffusion per step.
     Has the following orders of convergence:
 
-    - 1.5 for SDEs with additive noise (but [`diffrax.ShARK`][] is recommended instead)
+    - 1.5 for SDEs with additive noise (but [`diffrax_extensions.ShARK`][] is recommended instead)
     - 1.0 for Stratonovich SDEs with commutative noise
-    ([`diffrax.SlowRK`][] is recommended instead)
+    ([`diffrax_extensions.SlowRK`][] is recommended instead)
     - 0.5 for Stratonovich SDEs with general noise.
 
     For general Stratonovich SDEs this is equally precise as three steps of
-    [`diffrax.Heun`][] or a single step of [`diffrax.SPaRK`][], while requiring
+    [`diffrax_extensions.Heun`][] or a single step of [`diffrax_extensions.SPaRK`][], while requiring
     one fewer evaluation of the drift, so this is the recommended choice for general
     SDEs with an expensive drift vector field. If embedded error estimation is needed
-    (e.g. for adaptive time-stepping) then [`diffrax.SPaRK`][] is recommended instead.
+    (e.g. for adaptive time-stepping) then [`diffrax_extensions.SPaRK`][] is recommended instead.
 
     ??? cite "Reference"
 

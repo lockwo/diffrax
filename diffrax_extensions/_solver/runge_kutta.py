@@ -198,7 +198,7 @@ automatically.
 
 
 class MultiButcherTableau(eqx.Module):
-    """Wraps multiple [`diffrax.ButcherTableau`][]s together. Used in some multi-tableau
+    """Wraps multiple [`diffrax_extensions.ButcherTableau`][]s together. Used in some multi-tableau
     solvers, like IMEX methods.
 
     !!! important
@@ -347,13 +347,13 @@ class AbstractRungeKutta(AbstractAdaptiveSolver[_SolverState]):
     Runge--Kutta methods, which have a different computational structure.)
 
     Whilst this class can be subclassed directly, when defining your own Runge--Kutta
-    methods, it is usally better to work with [`diffrax.AbstractERK`][],
-    [`diffrax.AbstractDIRK`][], [`diffrax.AbstractSDIRK`][],
-    [`diffrax.AbstractESDIRK`][] directly.
+    methods, it is usally better to work with [`diffrax_extensions.AbstractERK`][],
+    [`diffrax_extensions.AbstractDIRK`][], [`diffrax_extensions.AbstractSDIRK`][],
+    [`diffrax_extensions.AbstractESDIRK`][] directly.
 
     Subclasses should specify two class-level attributes. The first is `tableau`, an
-    instance of [`diffrax.ButcherTableau`][]. The second is `calculate_jacobian`, an
-    instance of [`diffrax.CalculateJacobian`][].
+    instance of [`diffrax_extensions.ButcherTableau`][]. The second is `calculate_jacobian`, an
+    instance of [`diffrax_extensions.CalculateJacobian`][].
     """
 
     scan_kind: Union[None, Literal["lax", "checkpointed", "bounded"]] = None
@@ -466,7 +466,7 @@ class AbstractRungeKutta(AbstractAdaptiveSolver[_SolverState]):
         # Several of these are implicit methods. The latter two are multi-tableau
         # methods.
         #
-        # Both ODEs and SDEs: this is the usual innovation with Diffrax. We treat
+        # Both ODEs and SDEs: this is the usual innovation with diffrax_extensions. We treat
         # everything as a CDE against an arbitrary control. This also means we have a
         # distinction between f-space (vector field values) and k-space
         # ((vector field)-control products).
@@ -1205,7 +1205,7 @@ class AbstractERK(AbstractRungeKutta):
     """Abstract base class for all Explicit Runge--Kutta solvers.
 
     Subclasses should include a class-level attribute `tableau`, an instance of
-    [`diffrax.ButcherTableau`][].
+    [`diffrax_extensions.ButcherTableau`][].
     """
 
     calculate_jacobian: ClassVar[CalculateJacobian] = CalculateJacobian.never
@@ -1215,7 +1215,7 @@ class AbstractDIRK(AbstractRungeKutta, AbstractImplicitSolver):
     """Abstract base class for all Diagonal Implicit Runge--Kutta solvers.
 
     Subclasses should include a class-level attribute `tableau`, an instance of
-    [`diffrax.ButcherTableau`][].
+    [`diffrax_extensions.ButcherTableau`][].
     """
 
     calculate_jacobian: ClassVar[CalculateJacobian] = CalculateJacobian.every_stage
@@ -1225,7 +1225,7 @@ class AbstractSDIRK(AbstractDIRK):
     """Abstract base class for all Singular Diagonal Implict Runge--Kutta solvers.
 
     Subclasses should include a class-level attribute `tableau`, an instance of
-    [`diffrax.ButcherTableau`][].
+    [`diffrax_extensions.ButcherTableau`][].
     """
 
     def __init_subclass__(cls, **kwargs):
@@ -1244,7 +1244,7 @@ class AbstractESDIRK(AbstractDIRK):
     solvers.
 
     Subclasses should include a class-level attribute `tableau`, an instance of
-    [`diffrax.ButcherTableau`][].
+    [`diffrax_extensions.ButcherTableau`][].
     """
 
     def __init_subclass__(cls, **kwargs):

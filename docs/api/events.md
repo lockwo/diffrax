@@ -2,9 +2,9 @@
 
 Events allow for interrupting a differential equation solve, by terminating the solve before `t1` is reached.
 
-::: diffrax.Event
+::: diffrax_extensions.Event
     selection:
         members:
             - __init__
 
-::: diffrax.steady_state_event
+::: diffrax_extensions.steady_state_event

@@ -1,4 +1,6 @@
-# Diffrax in a nutshell
+# Diffrax Extensions in a nutshell
+
+Diffrax Extensions is a fork of diffrax that is a strict superset of features.
 
 Diffrax is a [JAX](https://github.com/google/jax)-based library providing numerical differential equation solvers.
 
@@ -17,7 +19,7 @@ _From a technical point of view, the internal structure of the library is pretty
 ## Installation
 
 ```
-pip install diffrax
+pip install diffrax_extension
 ```
 
 Requires Python 3.9+, JAX 0.4.13+, and [Equinox](https://github.com/patrick-kidger/equinox) 0.10.11+.

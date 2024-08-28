@@ -8,7 +8,7 @@ Here's a quick example:
 !!! Example
 
     ```python
-    import diffrax as dfx
+    import diffrax_extensions as dfx
     import optimistix as optx
 
     root_finder = optx.Newton(rtol=1e-8, atol=1e-8)
@@ -16,17 +16,17 @@ Here's a quick example:
     dfx.diffeqsolve(..., solver, ...)
     ```
 
-In addition to the solvers provided by Optimistix, then Diffrax provides some additional differential-equation-specific functionality, namely [`diffrax.VeryChord`][] and [`diffrax.with_stepsize_controller_tols`][]. The former is a variation of the [chord method](https://docs.kidger.site/optimistix/api/root_find/#optimistix.Chord) that is slightly more efficient for most differential equation solvers. The latter sets the convergence tolerances of the root-finding algorithm to whatever tolerances were used with the adaptive stepsize controller (i.e. `diffeqsolve(..., stepsize_controller=diffrax.PIDController(rtol=..., atol=...))`).
+In addition to the solvers provided by Optimistix, then Diffrax provides some additional differential-equation-specific functionality, namely [`diffrax_extensions.VeryChord`][] and [`diffrax_extensions.with_stepsize_controller_tols`][]. The former is a variation of the [chord method](https://docs.kidger.site/optimistix/api/root_find/#optimistix.Chord) that is slightly more efficient for most differential equation solvers. The latter sets the convergence tolerances of the root-finding algorithm to whatever tolerances were used with the adaptive stepsize controller (i.e. `diffeqsolve(..., stepsize_controller=diffrax_extensions.PIDController(rtol=..., atol=...))`).
 
 As such the default root-finding algorithm for most solvers in Diffrax is `with_stepsize_controller_tols(VeryChord)()`.
 
 ---
 
-::: diffrax.VeryChord
+::: diffrax_extensions.VeryChord
     selection:
         members:
             - __init__
 
 ---
 
-::: diffrax.with_stepsize_controller_tols
+::: diffrax_extensions.with_stepsize_controller_tols

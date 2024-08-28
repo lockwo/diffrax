@@ -14,7 +14,7 @@ from .base import AbstractStepSizeController
 
 class ConstantStepSize(AbstractStepSizeController[RealScalarLike, RealScalarLike]):
     """Use a constant step size, equal to the `dt0` argument of
-    [`diffrax.diffeqsolve`][].
+    [`diffrax_extensions.diffeqsolve`][].
     """
 
     def wrap(self, direction: IntScalarLike):
@@ -132,7 +132,7 @@ class StepTo(AbstractStepSizeController[IntScalarLike, None]):
 StepTo.__init__.__doc__ = """**Arguments:**
 
 - `ts`: The times to step to. Must be an increasing/decreasing sequence of times
-    between the `t0` and `t1` (inclusive) passed to [`diffrax.diffeqsolve`][].
+    between the `t0` and `t1` (inclusive) passed to [`diffrax_extensions.diffeqsolve`][].
     Correctness of `ts` with respect to `t0` and `t1` as well as its
     monotonicity is checked by the implementation.
 """

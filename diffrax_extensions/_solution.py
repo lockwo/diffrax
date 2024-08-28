@@ -30,9 +30,9 @@ class RESULTS(optx.RESULTS):  # pyright: ignore
 @property
 def discrete_terminating_event_occurred(self):
     warnings.warn(
-        "`diffrax.RESULTS.discrete_terminating_event_occurred` is deprecated in "
-        "favour of `diffrax.RESULTS.terminating_event_occurred`. This will be "
-        "removed in some future version of Diffrax.",
+        "`diffrax_extensions.RESULTS.discrete_terminating_event_occurred` is deprecated in "
+        "favour of `diffrax_extensions.RESULTS.terminating_event_occurred`. This will be "
+        "removed in some future version of diffrax_extensions.",
         stacklevel=2,
     )
     return self.event_occurred
@@ -83,7 +83,7 @@ class Solution(AbstractPath):
     - `ys`: The value of the solution at each of the times in `ts`. Might `None` if no
         values were saved.
     - `stats`: Statistics for the solve (number of steps etc.).
-    - `result`: A [`diffrax.RESULTS`][] specifying the success or cause of failure of
+    - `result`: A [`diffrax_extensions.RESULTS`][] specifying the success or cause of failure of
         the solve. A human-readable message is displayed if printed. No message means
         success!
     - `solver_state`: If saved, the final internal state of the numerical solver.
@@ -99,7 +99,7 @@ class Solution(AbstractPath):
 
         If `diffeqsolve(..., saveat=SaveAt(steps=True))` is set, then the `ts` and `ys`
         in the solution object will be padded with `NaN`s, out to the value of
-        `max_steps` passed to [`diffrax.diffeqsolve`][].
+        `max_steps` passed to [`diffrax_extensions.diffeqsolve`][].
 
         This is because JAX demands that shapes be known statically ahead-of-time. As
         we do not know how many steps we will take until the solve is performed, we

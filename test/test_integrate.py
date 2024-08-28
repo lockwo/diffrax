@@ -3,7 +3,7 @@ import math
 import operator
 from typing import Any, cast
 
-import diffrax
+import diffrax_extensions as diffrax
 import equinox as eqx
 import jax
 import jax.numpy as jnp
@@ -12,7 +12,7 @@ import jax.tree_util as jtu
 import lineax as lx
 import pytest
 import scipy.stats
-from diffrax import ControlTerm, MultiTerm, ODETerm
+from diffrax_extensions import ControlTerm, MultiTerm, ODETerm
 from equinox.internal import ω
 from jaxtyping import Array, ArrayLike, Float
 

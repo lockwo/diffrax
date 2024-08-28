@@ -17,7 +17,7 @@ class Event(eqx.Module):
     the event. Boolean and continuous conditions can be used together.
 
     Instances of this class should be passed as the `event` argument of
-    [`diffrax.diffeqsolve`][].
+    [`diffrax_extensions.diffeqsolve`][].
     """
 
     cond_fn: PyTree[Callable[..., Union[BoolScalarLike, RealScalarLike]]]
@@ -74,11 +74,11 @@ Event.__init__.__doc__ = """**Arguments:**
     t0 = 0
     t1 = jnp.inf
     dt0 = 0.1
-    term = diffrax.ODETerm(vector_field)
+    term = diffrax_extensions.ODETerm(vector_field)
     root_finder = optx.Newton(1e-5, 1e-5, optx.rms_norm)
-    event = diffrax.Event(cond_fn, root_finder)
-    solver = diffrax.Tsit5()
-    sol = diffrax.diffeqsolve(term, solver, t0, t1, dt0, y0, event=event)
+    event = diffrax_extensions.Event(cond_fn, root_finder)
+    solver = diffrax_extensions.Tsit5()
+    sol = diffrax_extensions.diffeqsolve(term, solver, t0, t1, dt0, y0, event=event)
     print(f"Event time: {sol.ts[0]}") # Event time: 1.58...
     print(f"Velocity at event time: {sol.ys[0, 1]}") # Velocity at event time: -12.64...
     ```
@@ -92,7 +92,7 @@ def steady_state_event(
 ):
     """Create a condition function that terminates the solve once a steady state is
     achieved. The returned function should be passed as the `cond_fn` argument of
-    [`diffrax.Event`][].
+    [`diffrax_extensions.Event`][].
 
     **Arguments:**
 
@@ -104,7 +104,7 @@ def steady_state_event(
     **Returns:**
 
     A function `f(t, y, args, **kwargs)`, that can be passed to
-    `diffrax.Event(cond_fn=..., ...)`.
+    `diffrax_extensions.Event(cond_fn=..., ...)`.
     """
 
     def _cond_fn(t, y, args, *, terms, solver, stepsize_controller, **kwargs):
@@ -112,7 +112,7 @@ def steady_state_event(
         msg = (
             "The `rtol`, `atol`, and `norm` for `steady_state_event` default to the "
             "values used with an adaptive step size controller (such as "
-            "`diffrax.PIDController`). Either use an adaptive step size controller, or "
+            "`diffrax_extensions.PIDController`). Either use an adaptive step size controller, or "
             "specify these tolerances manually."
         )
         if rtol is None:

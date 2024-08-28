@@ -33,7 +33,7 @@ class SEA(AbstractSRK, AbstractStratonovichSolver):
     r"""Shifted Euler method for SDEs with additive noise.
 
     Makes one evaluation of the drift and diffusion per step and has a strong order 1.
-    Compared to [`diffrax.Euler`][], it has a better constant factor in the global
+    Compared to [`diffrax_extensions.Euler`][], it has a better constant factor in the global
     error, and an improved local error of $O(h^2)$ instead of $O(h^{1.5})$.
 
     This solver is useful for solving additive-noise SDEs with as few drift and

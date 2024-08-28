@@ -1,4 +1,4 @@
-import diffrax
+import diffrax_extensions as diffrax
 import equinox as eqx
 import jax
 import jax.numpy as jnp
@@ -158,3 +158,53 @@ def test_weaklydiagonal_deprecate():
         _ = diffrax.WeaklyDiagonalControlTerm(
             lambda t, y, args: 0.0, lambda t0, t1: jnp.array(t1 - t0)
         )
+
+
+def test_correction():
+    drift = lambda t, y, args: jnp.sin(y / 2)
+    diffusion = lambda t, y, args: jax.vmap(lambda a, b: a * b, in_axes=(None, 0))(
+        y, jnp.ones((3, 10))
+    ).T
+
+    t0, t1 = 0.0, 0.1
+    y0 = jnp.array([-0.5, -0.4, -0.3, -0.2, -0.1, 0.1, 0.2, 0.3, 0.4, 0.5])
+
+    def solve(key, solver, dt):
+        brownian_motion = diffrax.VirtualBrownianTree(
+            t0, t1, tol=dt / 2, shape=(3,), key=key
+        )
+        drift_term = diffrax.ODETerm(drift)
+        diffusion_term = diffrax.ControlTerm(diffusion, brownian_motion)
+        terms = diffrax.MultiTerm(drift_term, diffusion_term)
+        return diffrax.diffeqsolve(
+            terms, solver, t0=t0, t1=t1, dt0=dt, y0=y0, saveat=diffrax.SaveAt(t1=True)
+        )
+
+    def solve_corrected(key, solver, dt):
+        brownian_motion = diffrax.VirtualBrownianTree(
+            t0, t1, tol=dt / 2, shape=(3,), key=key
+        )
+        diffusion_term = diffrax.ControlTerm(diffusion, brownian_motion)
+        drift_term = diffrax.stratonovich_to_ito(diffrax.ODETerm(drift), diffusion_term)
+        terms = diffrax.MultiTerm(drift_term, diffusion_term)
+        return diffrax.diffeqsolve(
+            terms, solver, t0=t0, t1=t1, dt0=dt, y0=y0, saveat=diffrax.SaveAt(t1=True)
+        )
+
+    solve_fn = eqx.filter_jit(eqx.filter_vmap(solve, in_axes=(0, None, None)))
+    solve_corrected_fn = eqx.filter_jit(
+        eqx.filter_vmap(solve_corrected, in_axes=(0, None, None))
+    )
+
+    euler_solver = diffrax.Euler()
+    heun_solver = diffrax.Heun()
+
+    key = jax.random.key(0)
+    keys = jax.random.split(key, 100)
+
+    em = solve_fn(keys, euler_solver, 1e-3).ys.squeeze()
+    h = solve_fn(keys, heun_solver, 1e-2).ys.squeeze()
+    h_corrected = solve_corrected_fn(keys, heun_solver, 1e-2).ys.squeeze()
+
+    assert ((em - h) ** 2).mean() > 1e-4
+    assert ((em - h_corrected) ** 2).mean() < 1e-4

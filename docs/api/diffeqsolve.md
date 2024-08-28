@@ -1,3 +1,3 @@
 # diffeqsolve
 
-::: diffrax.diffeqsolve
+::: diffrax_extensions.diffeqsolve

@@ -10,7 +10,7 @@ import timeit
 from typing import cast, Optional, Union
 from typing_extensions import TypeAlias
 
-import diffrax
+import diffrax_extensions as diffrax
 import equinox as eqx
 import equinox.internal as eqxi
 import jax
@@ -20,7 +20,7 @@ import jax.random as jr
 import jax.tree_util as jtu
 import lineax.internal as lxi
 import numpy as np
-from diffrax import AbstractBrownianPath, VirtualBrownianTree
+from diffrax_extensions import AbstractBrownianPath, VirtualBrownianTree
 from jaxtyping import Array, Float, PRNGKeyArray, PyTree, Real
 
 

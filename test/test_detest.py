@@ -11,7 +11,7 @@
 
 import math
 
-import diffrax
+import diffrax_extensions as diffrax
 import jax
 import jax.flatten_util as fu
 import jax.numpy as jnp

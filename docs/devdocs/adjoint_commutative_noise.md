@@ -14,7 +14,7 @@ in either case assumed to satisfy the commutativity condition
 
 $σ_{i\, j_2} \frac{\partial σ_{k\, j_1}}{\partial y_i} = σ_{i\, j_1} \frac{\partial σ_{k\, j_2}}{\partial y_i}$.
 
-Then the backward pass solved during [`diffrax.BacksolveAdjoint`][] will also satisfy the commutativity condition if and only if the following higher-order commutativity condition is satisfied.
+Then the backward pass solved during [`diffrax_extensions.BacksolveAdjoint`][] will also satisfy the commutativity condition if and only if the following higher-order commutativity condition is satisfied.
 
 $σ_{i\, j_2} \frac{\partial^2 σ_{k\, j_1}}{\partial y_i \partial y_m} = σ_{i\, j_1} \frac{\partial^2 σ_{k\, j_2}}{\partial y_i \partial y_m}$
 

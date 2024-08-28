@@ -2,7 +2,7 @@ import functools as ft
 import timeit
 from typing import cast
 
-import diffrax as dfx
+import diffrax_extensions as dfx
 import equinox as eqx
 import jax
 import jax.numpy as jnp

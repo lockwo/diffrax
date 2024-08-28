@@ -10,15 +10,15 @@ then we have two "terms": a drift and a diffusion. Each of these terms has two p
 
 !!! example
 
-    Consider the ODE $\frac{\mathrm{d}{y}}{\mathrm{d}t} = f(t, y(t))$. Then this has vector field $f$, control $\mathrm{d}t$, and their interaction is a vector-scalar product. This can be described as a single [`diffrax.ODETerm`][].
+    Consider the ODE $\frac{\mathrm{d}{y}}{\mathrm{d}t} = f(t, y(t))$. Then this has vector field $f$, control $\mathrm{d}t$, and their interaction is a vector-scalar product. This can be described as a single [`diffrax_extensions.ODETerm`][].
 
 #### Adding multiple terms, such as SDEs
 
-We can add multiple terms together by grouping them into a single [`diffrax.MultiTerm`][].
+We can add multiple terms together by grouping them into a single [`diffrax_extensions.MultiTerm`][].
 
 !!! example
 
-    The SDE above would have its drift described by [`diffrax.ODETerm`][] and the diffusion described by a [`diffrax.ControlTerm`][]. As these affect the same evolving state variable, they should be passed to the solver as `MultiTerm(ODETerm(...), ControlTerm(...))`.
+    The SDE above would have its drift described by [`diffrax_extensions.ODETerm`][] and the diffusion described by a [`diffrax_extensions.ControlTerm`][]. As these affect the same evolving state variable, they should be passed to the solver as `MultiTerm(ODETerm(...), ControlTerm(...))`.
 
 #### Independent terms, such as Hamiltonian systems
 
@@ -58,9 +58,9 @@ Some example term structures include:
 
 ---
 
-??? abstract "`diffrax.AbstractTerm`"
+??? abstract "`diffrax_extensions.AbstractTerm`"
 
-    ::: diffrax.AbstractTerm
+    ::: diffrax_extensions.AbstractTerm
         selection:
             members:
                 - vf
@@ -71,23 +71,25 @@ Some example term structures include:
 
 ??? note "Defining your own term types"
 
-    For advanced users: you can create your own terms if appropriate. For example if your diffusion is matrix, itself computed as a matrix-matrix product, then you may wish to define a custom term and specify its [`diffrax.AbstractTerm.vf_prod`][] method. By overriding this method you could express the contraction of the vector field - control as a matrix-(matix-vector) product, which is more efficient than the default (matrix-matrix)-vector product.
+    For advanced users: you can create your own terms if appropriate. For example if your diffusion is matrix, itself computed as a matrix-matrix product, then you may wish to define a custom term and specify its [`diffrax_extensions.AbstractTerm.vf_prod`][] method. By overriding this method you could express the contraction of the vector field - control as a matrix-(matix-vector) product, which is more efficient than the default (matrix-matrix)-vector product.
 
 
 ---
 
-::: diffrax.ODETerm
+::: diffrax_extensions.ODETerm
     selection:
         members:
             - __init__
 
-::: diffrax.ControlTerm
+::: diffrax_extensions.ControlTerm
     selection:
         members:
             - __init__
             - to_ode
 
-::: diffrax.MultiTerm
+::: diffrax_extensions.MultiTerm
     selection:
         members:
             - __init__
+
+::: diffrax_extensions.stratonovich_to_ito

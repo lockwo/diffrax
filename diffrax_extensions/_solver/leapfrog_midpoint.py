@@ -27,7 +27,7 @@ class LeapfrogMidpoint(AbstractSolver):
     used by Shampine in the reference below. It should not be confused with any of the
     many other "leapfrog methods" (there are several), or with the "midpoint method"
     (which is usually taken to refer to the explicit Runge--Kutta method
-    [`diffrax.Midpoint`][]).
+    [`diffrax_extensions.Midpoint`][]).
 
     ??? cite "Reference"
 

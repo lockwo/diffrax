@@ -45,17 +45,17 @@ The following interpolation routines may be used to perform this interpolation.
                 - No: Use Hermite cubic splines with backward differences.
         - No: Use Hermite cubic splines with backward differences.
 
-    Rectilinear interpolation can be obtained by combining [`diffrax.rectilinear_interpolation`][] and [`diffrax.LinearInterpolation`][].
+    Rectilinear interpolation can be obtained by combining [`diffrax_extensions.rectilinear_interpolation`][] and [`diffrax_extensions.LinearInterpolation`][].
 
-    Hermite cubic splines with backward differences can be obtained by combining [`diffrax.backward_hermite_coefficients`][] and [`diffrax.CubicInterpolation`][].
+    Hermite cubic splines with backward differences can be obtained by combining [`diffrax_extensions.backward_hermite_coefficients`][] and [`diffrax_extensions.CubicInterpolation`][].
 
 ---
 
 ## Interpolation classes
 
-The following are the main interpolation classes. Instances of these classes are suitable controls to pass to [`diffrax.ControlTerm`][].
+The following are the main interpolation classes. Instances of these classes are suitable controls to pass to [`diffrax_extensions.ControlTerm`][].
 
-::: diffrax.LinearInterpolation
+::: diffrax_extensions.LinearInterpolation
     selection:
         members:
             - __init__
@@ -64,7 +64,7 @@ The following are the main interpolation classes. Instances of these classes are
             - t0
             - t1
         
-::: diffrax.CubicInterpolation
+::: diffrax_extensions.CubicInterpolation
     selection:
         members:
             - __init__
@@ -77,14 +77,14 @@ The following are the main interpolation classes. Instances of these classes are
 
 ## Handling missing data
 
-We would like [`diffrax.LinearInterpolation`][] to be able to handle missing data (represented as `NaN`). The following can be used for this purpose.
+We would like [`diffrax_extensions.LinearInterpolation`][] to be able to handle missing data (represented as `NaN`). The following can be used for this purpose.
 
-::: diffrax.linear_interpolation
+::: diffrax_extensions.linear_interpolation
 
-::: diffrax.rectilinear_interpolation
+::: diffrax_extensions.rectilinear_interpolation
 
 ---
 
 ## Calculating coefficients
 
-::: diffrax.backward_hermite_coefficients
+::: diffrax_extensions.backward_hermite_coefficients

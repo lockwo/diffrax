@@ -184,7 +184,7 @@ class TqdmProgressMeter(AbstractProgressMeter):
     def __check_init__(self):
         if importlib.util.find_spec("tqdm") is None:
             raise ValueError(
-                "Cannot use `diffrax.TqdmProgressMeter` without `tqdm` installed. "
+                "Cannot use `diffrax_extensions.TqdmProgressMeter` without `tqdm` installed. "
                 "Install it via `pip install tqdm`."
             )
 

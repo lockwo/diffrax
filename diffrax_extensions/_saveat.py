@@ -25,7 +25,7 @@ class SubSaveAt(eqx.Module):
     """Used for finer-grained control over what is saved. A PyTree of these should be
     passed to `SaveAt(subs=...)`.
 
-    See [`diffrax.SaveAt`][] for more details on how this is used. (This is a
+    See [`diffrax_extensions.SaveAt`][] for more details on how this is used. (This is a
     relatively niche feature and most users will probably not need to use `SubSaveAt`.)
     """
 
@@ -57,7 +57,7 @@ class SaveAt(eqx.Module):
     """Determines what to save as output from the differential equation solve.
 
     Instances of this class should be passed as the `saveat` argument of
-    [`diffrax.diffeqsolve`][].
+    [`diffrax_extensions.diffeqsolve`][].
     """
 
     subs: PyTree[SubSaveAt] = None
@@ -114,7 +114,7 @@ These arguments are used less frequently.
     evolving solution is saved. For example this can be useful to save only statistics
     of your solution, so as to reduce memory usage.
 
-- `subs`: Some PyTree of [`diffrax.SubSaveAt`][], which allows for finer-grained control
+- `subs`: Some PyTree of [`diffrax_extensions.SubSaveAt`][], which allows for finer-grained control
     over what is saved. Each `SubSaveAt` specifies a combination of a function `fn` and
     some times `t0`, `t1`, `ts`, `steps` at which to evaluate it. `sol.ts` and `sol.ys`
     will then be PyTrees of the same structure as `subs`, with each leaf of the PyTree
@@ -149,11 +149,11 @@ These arguments are used less frequently.
     def statistics(t, y, args):
         return jnp.mean(y), jnp.std(y)
 
-    final_subsaveat = diffrax.SubSaveAt(t1=True)
-    evolving_subsaveat = diffrax.SubSaveAt(ts=ts, fn=statistics)
-    saveat = diffrax.SaveAt(subs=[final_subsaveat, evolving_subsaveat])
+    final_subsaveat = diffrax_extensions.SubSaveAt(t1=True)
+    evolving_subsaveat = diffrax_extensions.SubSaveAt(ts=ts, fn=statistics)
+    saveat = diffrax_extensions.SaveAt(subs=[final_subsaveat, evolving_subsaveat])
 
-    sol = diffrax.diffeqsolve(..., t0=t0, t1=t1, saveat=saveat)
+    sol = diffrax_extensions.diffeqsolve(..., t0=t0, t1=t1, saveat=saveat)
     (y1, evolving_stats) = sol.ys  # PyTree of the save structure as `SaveAt(subs=...)`.
     evolving_means, evolving_stds = evolving_stats
     ```
@@ -166,10 +166,10 @@ These arguments are used less frequently.
     y0 = (y0_a, y0_b)
     ts_a = ...
     ts_b = ...
-    subsaveat_a = diffrax.SubSaveAt(ts=ts_a, fn=lambda t, y, args: y[0])
-    subsaveat_b = diffrax.SubSaveAt(ts=ts_b, fn=lambda t, y, args: y[1])
-    saveat = diffrax.SaveAt(subs=[subsaveat_a, subsaveat_b])
-    sol = diffrax.diffeqsolve(..., y0=y0, saveat=saveat)
+    subsaveat_a = diffrax_extensions.SubSaveAt(ts=ts_a, fn=lambda t, y, args: y[0])
+    subsaveat_b = diffrax_extensions.SubSaveAt(ts=ts_b, fn=lambda t, y, args: y[1])
+    saveat = diffrax_extensions.SaveAt(subs=[subsaveat_a, subsaveat_b])
+    sol = diffrax_extensions.diffeqsolve(..., y0=y0, saveat=saveat)
     y_a, y_b = sol.ys  # PyTree of the same structure as `SaveAt(subs=...)`.
     # `sol.ts` will equal `(ts_a, ts_b)`.
     ```

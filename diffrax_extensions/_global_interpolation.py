@@ -62,9 +62,9 @@ class LinearInterpolation(AbstractGlobalInterpolation):
 
     !!! warning
 
-        If using `LinearInterpolation` as part of a [`diffrax.ControlTerm`][], then the
+        If using `LinearInterpolation` as part of a [`diffrax_extensions.ControlTerm`][], then the
         vector field will make a jump every time one of the knots `ts` is passed. If
-        using an adaptive step size controller such as [`diffrax.PIDController`][],
+        using an adaptive step size controller such as [`diffrax_extensions.PIDController`][],
         then this means the controller should be informed about the jumps, so that it
         can handle them appropriately:
 
@@ -181,7 +181,7 @@ LinearInterpolation.__init__.__doc__ = """**Arguments:**
 - `ys`: The value of the data at those times.
 
 Note that if `ys` has any missing data then you may wish to use
-[`diffrax.linear_interpolation`][] or [`diffrax.rectilinear_interpolation`][] first to
+[`diffrax_extensions.linear_interpolation`][] or [`diffrax_extensions.rectilinear_interpolation`][] first to
 interpolate over these.
 """
 
@@ -302,7 +302,7 @@ coefficients.
 
 In practice a good choice is typically "cubic Hermite splines with backward
 differences", introduced in [this paper](https://arxiv.org/abs/2106.11028). Such
-coefficients can be obtained using [`diffrax.backward_hermite_coefficients`][].
+coefficients can be obtained using [`diffrax_extensions.backward_hermite_coefficients`][].
 
 Letting `d, c, b, a = coeffs`, then for all `t` in the interval from `ts[i]` to
 `ts[i + 1]` the interpolation is defined as
@@ -486,7 +486,7 @@ def linear_interpolation(
     Any missing values in `ys` (represented as `NaN`) are filled in by looking at the
     nearest non-`NaN` values either side, and linearly interpolating.
 
-    This is often useful prior to using [`diffrax.LinearInterpolation`][] to create a
+    This is often useful prior to using [`diffrax_extensions.LinearInterpolation`][] to create a
     continuous path from discrete observations.
 
     **Arguments:**
@@ -532,7 +532,7 @@ def rectilinear_interpolation(
     """Rectilinearly interpolates the input. This is a variant of linear interpolation
     that is particularly useful when using neural CDEs in a real-time scenario.
 
-    This is often useful prior to using [`diffrax.LinearInterpolation`][] to create a
+    This is often useful prior to using [`diffrax_extensions.LinearInterpolation`][] to create a
     continuous path from discrete observations, in real-time scenarios.
 
     It is strongly recommended to have a read of the reference below if you are
@@ -731,7 +731,7 @@ def backward_hermite_coefficients(
     """Interpolates the data with a cubic spline. Specifically, this calculates the
     coefficients for Hermite cubic splines with backward differences.
 
-    This is most useful prior to using [`diffrax.CubicInterpolation`][] to create a
+    This is most useful prior to using [`diffrax_extensions.CubicInterpolation`][] to create a
     smooth path from discrete observations.
 
     ??? cite "Reference"

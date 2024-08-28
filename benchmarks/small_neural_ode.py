@@ -4,7 +4,7 @@ import gc
 import time
 from typing import cast
 
-import diffrax
+import diffrax_extensions as diffrax
 import equinox as eqx
 import jax
 import jax.experimental.ode as experimental

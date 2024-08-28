@@ -24,11 +24,11 @@ diffeqsolve(
 )
 ```
 
-In practice, [`diffrax.Tsit5`][] is usually a better solver than [`diffrax.Dopri5`][]. And the default adjoint method ([`diffrax.RecursiveCheckpointAdjoint`][]) is usually a better choice than [`diffrax.BacksolveAdjoint`][].
+In practice, [`diffrax_extensions.Tsit5`][] is usually a better solver than [`diffrax_extensions.Dopri5`][]. And the default adjoint method ([`diffrax_extensions.RecursiveCheckpointAdjoint`][]) is usually a better choice than [`diffrax_extensions.BacksolveAdjoint`][].
 
 ### I'm getting a `CustomVJPException`.
 
-This can happen if you use [`diffrax.BacksolveAdjoint`][] incorrectly.
+This can happen if you use [`diffrax_extensions.BacksolveAdjoint`][] incorrectly.
 
 Gradients will be computed for:
 
@@ -43,7 +43,7 @@ Attempting to compute gradients with respect to anything else will result in thi
     Here is a minimal example of **wrong** code that will raise this exception.
 
     ```python
-    from diffrax import BacksolveAdjoint, diffeqsolve, Euler, ODETerm
+    from diffrax_extensions import BacksolveAdjoint, diffeqsolve, Euler, ODETerm
     import equinox as eqx
     import jax.numpy as jnp
     import jax.random as jr
@@ -67,7 +67,7 @@ Attempting to compute gradients with respect to anything else will result in thi
     The corrected version of the previous example is as follows. In this case, the model is properly part of the PyTree structure of `terms`.
 
     ```python
-    from diffrax import BacksolveAdjoint, diffeqsolve, Euler, ODETerm
+    from diffrax_extensions import BacksolveAdjoint, diffeqsolve, Euler, ODETerm
     import equinox as eqx
     import jax.numpy as jnp
     import jax.random as jr

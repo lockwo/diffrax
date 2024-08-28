@@ -1,4 +1,4 @@
-import diffrax
+import diffrax_extensions as diffrax
 import equinox as eqx
 import jax
 import jax.numpy as jnp

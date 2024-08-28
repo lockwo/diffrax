@@ -1,9 +1,9 @@
 from typing import Annotated, Any, Generic, Literal, TypeVar, Union
 
-import diffrax as dfx
+import diffrax_extensions as dfx
 import pytest
-from diffrax._custom_types import RealScalarLike
-from diffrax._typing import get_args_of, get_origin_no_specials
+from diffrax_extensions._custom_types import RealScalarLike
+from diffrax_extensions._typing import get_args_of, get_origin_no_specials
 
 
 T = TypeVar("T")

@@ -100,7 +100,7 @@ class AbstractStepSizeController(eqx.Module, Generic[_ControllerState, _Dt0]):
             solver. Only a "candidate" as it is now up to the step size controller to
             accept or reject it.
         - `args`: Any extra arguments passed to the vector field; as
-            [`diffrax.diffeqsolve`][].
+            [`diffrax_extensions.diffeqsolve`][].
         - `y_error`: An estimate of the local truncation error, as calculated by the
             main solver.
         - `error_order`: The order of `y_error`. For an ODE this is typically equal to
@@ -123,7 +123,7 @@ class AbstractStepSizeController(eqx.Module, Generic[_ControllerState, _Dt0]):
             hidden state; in particular the FSAL property of some Runge--Kutta
             methods.)
         - The value of the step size controller state at `t1`.
-        - An integer (corresponding to `diffrax.RESULTS`) indicating whether the step
+        - An integer (corresponding to `diffrax_extensions.RESULTS`) indicating whether the step
             happened successfully, or if it failed for some reason. (e.g. hitting a
             minimum allowed step size in the solver.)
         """

@@ -1,13 +1,18 @@
 from typing import Literal
 
-import diffrax
+import diffrax_extensions as diffrax
 import jax
 import jax.numpy as jnp
 import jax.random as jr
 import jax.tree_util as jtu
 import lineax as lx
 import pytest
-from diffrax import ControlTerm, MultiTerm, ODETerm, WeaklyDiagonalControlTerm
+from diffrax_extensions import (
+    ControlTerm,
+    MultiTerm,
+    ODETerm,
+    WeaklyDiagonalControlTerm,
+)
 
 from .helpers import (
     get_mlp_sde,

@@ -6,4 +6,4 @@ Diffrax can autogenerate BibTeX citations for all the numerical methods you use.
 
     This is an experimental feature that may change.
 
-::: diffrax.citation
+::: diffrax_extensions.citation

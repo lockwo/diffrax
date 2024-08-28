@@ -10,19 +10,19 @@ The full list of ODE solvers is available on the [ODE solvers](../api/solvers/od
 
 ### Non-stiff problems
 
-For non-stiff problems then [`diffrax.Tsit5`][] is a good general-purpose solver.
+For non-stiff problems then [`diffrax_extensions.Tsit5`][] is a good general-purpose solver.
 
 !!! note
     
-    For a long time the recommend default solver for many problems was [`diffrax.Dopri5`][]. This is the default solver used in [`torchdiffeq`](https://github.com/rtqichen/torchdiffeq/), and is the solver used in MATLAB's `ode45`. However `Tsit5` is now reckoned on being slightly more efficient overall. (Try both if you wish.)
+    For a long time the recommend default solver for many problems was [`diffrax_extensions.Dopri5`][]. This is the default solver used in [`torchdiffeq`](https://github.com/rtqichen/torchdiffeq/), and is the solver used in MATLAB's `ode45`. However `Tsit5` is now reckoned on being slightly more efficient overall. (Try both if you wish.)
 
-If you need accurate solutions at tight tolerances then try [`diffrax.Dopri8`][].
+If you need accurate solutions at tight tolerances then try [`diffrax_extensions.Dopri8`][].
 
-If you are solving a neural differential equation, and training via discretise-then-optimise (corresponding to `diffeqsolve(..., adjoint=RecursiveCheckpointAdjoint())`, which is the default), then accurate solutions are often not needed and a low-order solver will be most efficient. For example something like [`diffrax.Heun`][].
+If you are solving a neural differential equation, and training via discretise-then-optimise (corresponding to `diffeqsolve(..., adjoint=RecursiveCheckpointAdjoint())`, which is the default), then accurate solutions are often not needed and a low-order solver will be most efficient. For example something like [`diffrax_extensions.Heun`][].
 
 ### Stiff problems
 
-For stiff problems then try the [`diffrax.Kvaerno3`][], [`diffrax.Kvaerno4`][], [`diffrax.Kvaerno5`][] family of solvers. In addition you should almost always use an adaptive step size controller such as [`diffrax.PIDController`][].
+For stiff problems then try the [`diffrax_extensions.Kvaerno3`][], [`diffrax_extensions.Kvaerno4`][], [`diffrax_extensions.Kvaerno5`][] family of solvers. In addition you should almost always use an adaptive step size controller such as [`diffrax_extensions.PIDController`][].
 
 See also the [Stiff ODE example](../examples/stiff_ode.ipynb).
 
@@ -36,7 +36,7 @@ See also the [Stiff ODE example](../examples/stiff_ode.ipynb).
 
 ### Split problems
 
-For "split stiffness" problems, with one term that is stiff and another term that is non-stiff, then IMEX methods are appropriate: [`diffrax.KenCarp4`][] is recommended. In addition you should almost always use an adaptive step size controller such as [`diffrax.PIDController`][].
+For "split stiffness" problems, with one term that is stiff and another term that is non-stiff, then IMEX methods are appropriate: [`diffrax_extensions.KenCarp4`][] is recommended. In addition you should almost always use an adaptive step size controller such as [`diffrax_extensions.PIDController`][].
 
 ---
 
@@ -66,17 +66,17 @@ SDE solvers are relatively specialised depending on the type of problem. Each so
 
 For Itô SDEs:
 
-- If the noise is commutative then [`diffrax.ItoMilstein`][] is a typical choice;
-- If the noise is noncommutative then [`diffrax.Euler`][] is a typical choice.
+- If the noise is commutative then [`diffrax_extensions.ItoMilstein`][] is a typical choice;
+- If the noise is noncommutative then [`diffrax_extensions.Euler`][] is a typical choice.
 
 ### Stratonovich
 
 For Stratonovich SDEs:
 
-- If cheap low-accuracy solves are desired then [`diffrax.EulerHeun`][] is a typical choice.
-- Otherwise, and if the noise is commutative, then [`diffrax.SlowRK`][] has the best order of convergence, but is expensive per step. [`diffrax.StratonovichMilstein`][] is a good cheap alternative.
-- If the noise is noncommutative, [`diffrax.GeneralShARK`][] is the most efficient choice, while [`diffrax.Heun`][] is a good cheap alternative.
-- If the noise is noncommutative and an embedded method for adaptive step size control is desired, then [`diffrax.SPaRK`][] is the recommended choice.
+- If cheap low-accuracy solves are desired then [`diffrax_extensions.EulerHeun`][] is a typical choice.
+- Otherwise, and if the noise is commutative, then [`diffrax_extensions.SlowRK`][] has the best order of convergence, but is expensive per step. [`diffrax_extensions.StratonovichMilstein`][] is a good cheap alternative.
+- If the noise is noncommutative, [`diffrax_extensions.GeneralShARK`][] is the most efficient choice, while [`diffrax_extensions.Heun`][] is a good cheap alternative.
+- If the noise is noncommutative and an embedded method for adaptive step size control is desired, then [`diffrax_extensions.SPaRK`][] is the recommended choice.
 
 ### Additive noise
 
@@ -88,8 +88,8 @@ Then the diffusion matrix $σ$ is said to be additive if $σ(t, y) = σ(t)$. Tha
 
 In this case the Itô solution and the Stratonovich solution coincide, and mathematically speaking the choice of Itô vs Stratonovich is unimportant. Special solvers for additive-noise SDEs tend to do particularly well as compared to the general Itô or Stratonovich solvers discussed above.
 
-- The cheapest (but least accurate) solver is [`diffrax.SEA`][].
-- Otherwise [`diffrax.ShARK`][] or [`diffrax.SRA1`][] are good choices.
+- The cheapest (but least accurate) solver is [`diffrax_extensions.SEA`][].
+- Otherwise [`diffrax_extensions.ShARK`][] or [`diffrax_extensions.SRA1`][] are good choices.
 
 ---
 
@@ -114,4 +114,4 @@ The other option is to directly discretise the control. Given some control $x \c
 
 (This is actually the principle on which many SDE solvers work.)
 
-It is an open question what are the best solvers to use when taking this approach, but low-order solvers are typical: for example [`diffrax.Euler`][] or [`diffrax.Heun`][].
+It is an open question what are the best solvers to use when taking this approach, but low-order solvers are typical: for example [`diffrax_extensions.Euler`][] or [`diffrax_extensions.Heun`][].

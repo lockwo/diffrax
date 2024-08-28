@@ -132,7 +132,7 @@ class AbstractSolver(eqx.Module, Generic[_SolverState], **_set_metaclass):
     ) -> _SolverState:
         """Initialises any hidden state for the solver.
 
-        **Arguments** as [`diffrax.diffeqsolve`][].
+        **Arguments** as [`diffrax_extensions.diffeqsolve`][].
 
         **Returns:**
 
@@ -179,7 +179,7 @@ class AbstractSolver(eqx.Module, Generic[_SolverState], **_set_metaclass):
             routine to calculate dense output. (Used with `SaveAt(ts=...)` or
             `SaveAt(dense=...)`.)
         - The value of the solver state at `t1`.
-        - An integer (corresponding to `diffrax.RESULTS`) indicating whether the step
+        - An integer (corresponding to `diffrax_extensions.RESULTS`) indicating whether the step
             happened successfully, or if (unusually) it failed for some reason.
         """
 
@@ -192,13 +192,13 @@ class AbstractSolver(eqx.Module, Generic[_SolverState], **_set_metaclass):
         args: Args,
     ) -> VF:
         """Evaluate the vector field at a point. (This is unlike
-        [`diffrax.AbstractSolver.step`][], which operates over an interval.)
+        [`diffrax_extensions.AbstractSolver.step`][], which operates over an interval.)
 
         For most operations differential equation solvers are interval-based, so this
         opertion should be used sparingly. This operation is needed for things like
         selecting an initial step size.
 
-        **Arguments:** As [`diffrax.diffeqsolve`][]
+        **Arguments:** As [`diffrax_extensions.diffeqsolve`][]
 
         **Returns:**
 
@@ -264,7 +264,7 @@ class HalfSolver(
 
         Many solvers already provide error estimates, making `HalfSolver` primarily
         useful when using a solver that doesn't provide error estimates -- e.g.
-        [`diffrax.Euler`][]. Such solvers are most common when solving SDEs.
+        [`diffrax_extensions.Euler`][]. Such solvers are most common when solving SDEs.
     """
 
     solver: AbstractSolver[_SolverState]

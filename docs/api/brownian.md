@@ -2,22 +2,22 @@
 
 SDEs are simulated using a Brownian motion as a control. (See the neural SDE example.)
 
-??? abstract "`diffrax.AbstractBrownianPath`"
+??? abstract "`diffrax_extensions.AbstractBrownianPath`"
 
-    ::: diffrax.AbstractBrownianPath
+    ::: diffrax_extensions.AbstractBrownianPath
         selection:
             members:
                 - evaluate
 
 ---
 
-::: diffrax.UnsafeBrownianPath
+::: diffrax_extensions.UnsafeBrownianPath
     selection:
         members:
             - __init__
             - evaluate
 
-::: diffrax.VirtualBrownianTree
+::: diffrax_extensions.VirtualBrownianTree
     selection:
         members:
             - __init__
@@ -46,26 +46,26 @@ a `VirtualBrownianTree`) should be initialized with `levy_area=SpaceTimeLevyArea
 `levy_area=SpaceTimeTimeLevyArea`. Note that for the Brownian motion,
 a concrete class must be used, not its abstract parent.
 
-::: diffrax.AbstractBrownianIncrement
+::: diffrax_extensions.AbstractBrownianIncrement
     selection:
         members: false
 
-::: diffrax.BrownianIncrement
+::: diffrax_extensions.BrownianIncrement
     selection:
         members: false
 
-::: diffrax.AbstractSpaceTimeLevyArea
+::: diffrax_extensions.AbstractSpaceTimeLevyArea
     selection:
         members: false
 
-::: diffrax.SpaceTimeLevyArea
+::: diffrax_extensions.SpaceTimeLevyArea
     selection:
         members: false
 
-::: diffrax.AbstractSpaceTimeTimeLevyArea
+::: diffrax_extensions.AbstractSpaceTimeTimeLevyArea
     selection:
         members: false
 
-::: diffrax.SpaceTimeTimeLevyArea
+::: diffrax_extensions.SpaceTimeTimeLevyArea
     selection:
         members: false

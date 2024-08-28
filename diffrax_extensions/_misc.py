@@ -88,12 +88,12 @@ def linear_rescale(t0, t, t1) -> Array:
 
 def adjoint_rms_seminorm(x: tuple[PyTree, PyTree, PyTree, PyTree]) -> RealScalarLike:
     """Defines an adjoint seminorm. This can frequently be used to increase the
-    efficiency of backpropagation via [`diffrax.BacksolveAdjoint`][], as follows:
+    efficiency of backpropagation via [`diffrax_extensions.BacksolveAdjoint`][], as follows:
 
     ```python
-    adjoint_controller = diffrax.PIDController(norm=diffrax.adjoint_rms_seminorm)
-    adjoint = diffrax.BacksolveAdjoint(stepsize_controller=adjoint_controller)
-    diffrax.diffeqsolve(..., adjoint=adjoint)
+    adjoint_controller = diffrax_extensions.PIDController(norm=diffrax_extensions.adjoint_rms_seminorm)
+    adjoint = diffrax_extensions.BacksolveAdjoint(stepsize_controller=adjoint_controller)
+    diffrax_extensions.diffeqsolve(..., adjoint=adjoint)
     ```
 
     Note that this means that any `stepsize_controller` specified for the forward pass

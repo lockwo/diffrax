@@ -135,7 +135,7 @@ class AbstractAdjoint(eqx.Module):
     ) -> Any:
         """Runs the main solve loop. Subclasses can override this to provide custom
         backpropagation behaviour; see for example the implementation of
-        [`diffrax.BacksolveAdjoint`][].
+        [`diffrax_extensions.BacksolveAdjoint`][].
         """
 
     # Eurgh, delayed imports to handle circular dependencies.
@@ -172,7 +172,7 @@ def _uncallable(*args, **kwargs):
 
 
 class RecursiveCheckpointAdjoint(AbstractAdjoint):
-    """Backpropagate through [`diffrax.diffeqsolve`][] by differentiating the numerical
+    """Backpropagate through [`diffrax_extensions.diffeqsolve`][] by differentiating the numerical
     solution directly. This is sometimes known as "discretise-then-optimise", or
     described as "backpropagation through the solver".
 
@@ -184,7 +184,7 @@ class RecursiveCheckpointAdjoint(AbstractAdjoint):
     !!! info
 
         Note that this cannot be forward-mode autodifferentiated. (E.g. using
-        `jax.jvp`.) Try using [`diffrax.DirectAdjoint`][] if that is something you need.
+        `jax.jvp`.) Try using [`diffrax_extensions.DirectAdjoint`][] if that is something you need.
 
     ??? cite "References"
 
@@ -323,7 +323,7 @@ the computation will not be autodifferentiable.
 
 
 class DirectAdjoint(AbstractAdjoint):
-    """A variant of [`diffrax.RecursiveCheckpointAdjoint`][]. The differences are that
+    """A variant of [`diffrax_extensions.RecursiveCheckpointAdjoint`][]. The differences are that
     `DirectAdjoint`:
 
     - Is less time+memory efficient at reverse-mode autodifferentiation (specifically,
@@ -332,7 +332,7 @@ class DirectAdjoint(AbstractAdjoint):
     - Supports forward-mode autodifferentiation.
 
     So unless you need forward-mode autodifferentiation then
-    [`diffrax.RecursiveCheckpointAdjoint`][] should be preferred.
+    [`diffrax_extensions.RecursiveCheckpointAdjoint`][] should be preferred.
     """
 
     def loop(
@@ -450,8 +450,8 @@ class ImplicitAdjoint(AbstractAdjoint):
     r"""Backpropagate via the [implicit function theorem](https://en.wikipedia.org/wiki/Implicit_function_theorem#Statement_of_the_theorem).
 
     This is used when solving towards a steady state, typically using
-    [`diffrax.Event`][] where the condition function is obtained by calling
-    [`diffrax.steady_state_event`][]. In this case, the output of the solver is $y(θ)$
+    [`diffrax_extensions.Event`][] where the condition function is obtained by calling
+    [`diffrax_extensions.steady_state_event`][]. In this case, the output of the solver is $y(θ)$
     for which $f(t, y(θ), θ) = 0$. (Where $θ$ corresponds to all parameters found
     through `terms` and `args`, but not `y0`.) Then we can skip backpropagating through
     the solver and instead directly compute
@@ -720,7 +720,7 @@ def _loop_backsolve_bwd(
 
 
 class BacksolveAdjoint(AbstractAdjoint):
-    """Backpropagate through [`diffrax.diffeqsolve`][] by solving the continuous
+    """Backpropagate through [`diffrax_extensions.diffeqsolve`][] by solving the continuous
     adjoint equations backwards-in-time. This is also sometimes known as
     "optimise-then-discretise", the "continuous adjoint method" or simply the "adjoint
     method".
@@ -730,7 +730,7 @@ class BacksolveAdjoint(AbstractAdjoint):
     preferred unless exceeding memory is a concern.
 
     This will compute gradients with respect to the `terms`, `y0` and `args` arguments
-    passed to [`diffrax.diffeqsolve`][]. If you attempt to compute gradients with
+    passed to [`diffrax_extensions.diffeqsolve`][]. If you attempt to compute gradients with
     respect to anything else (for example `t0`, or arguments passed via closure), then
     a `CustomVJPException` will be raised. See also
     [this FAQ](../../further_details/faq/#im-getting-a-customvjpexception)
@@ -745,7 +745,7 @@ class BacksolveAdjoint(AbstractAdjoint):
     !!! warning
 
         Using this method prevents computing forward-mode autoderivatives of
-        [`diffrax.diffeqsolve`][]. (That is to say, `jax.jvp` will not work.)
+        [`diffrax_extensions.diffeqsolve`][]. (That is to say, `jax.jvp` will not work.)
     """  # noqa: E501
 
     kwargs: dict[str, Any]
@@ -754,7 +754,7 @@ class BacksolveAdjoint(AbstractAdjoint):
         """
         **Arguments:**
 
-        - `**kwargs`: The arguments for the [`diffrax.diffeqsolve`][] operations that
+        - `**kwargs`: The arguments for the [`diffrax_extensions.diffeqsolve`][] operations that
             are called on the backward pass. For example use
             ```python
             BacksolveAdjoint(solver=Dopri5())
@@ -827,12 +827,12 @@ class BacksolveAdjoint(AbstractAdjoint):
                 )
         if jtu.tree_structure(solver.term_structure) != jtu.tree_structure(0):
             raise NotImplementedError(
-                "`diffrax.BacksolveAdjoint` is only compatible with solvers that take "
+                "`diffrax_extensions.BacksolveAdjoint` is only compatible with solvers that take "
                 "a single term."
             )
         if event is not None:
             raise NotImplementedError(
-                "`diffrax.BacksolveAdjoint` is not compatible with events."
+                "`diffrax_extensions.BacksolveAdjoint` is not compatible with events."
             )
 
         y = init_state.y
